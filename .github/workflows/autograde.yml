@@ -18,7 +18,7 @@ jobs:
     - name: Checkout repositorio
       uses: actions/checkout@v3
       with:
-        submodules: false   # Evita errores si los submódulos no están bien configurados
+        submodules: false  
 
     - name: Configurar entorno virtual
       uses: actions/setup-python@v4
