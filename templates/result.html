@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Results</title>
+  <style>body{font-family:Arial;padding:18px}</style>
+</head>
+<body>
+  <a href="/search">← Back to search</a>
+  <hr>
+  {% if kind == "user" %}
+    <h2>User</h2>
+    <p><strong>ID:</strong> {{ user.id }} — <strong>Name:</strong> {{ user.name }}</p>
+    <h3>Groups</h3>
+    {% if groups %}
+      <ul>
+        {% for g in groups %}
+          <li>{{ g.name }} (id: {{ g.id }})</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No groups for this user.</p>
+    {% endif %}
+  {% elif kind == "user_list" %}
+    <h2>Users</h2>
+    {% for entry in users %}
+      <div style="border:1px solid #ddd;padding:8px;margin:8px 0">
+        <p><strong>{{ entry.user.name }}</strong> (id: {{ entry.user.id }})</p>
+        <p>Groups:
+        {% if entry.groups %}
+          {% for g in entry.groups %}
+            <span>{{ g.name }}</span>{% if not loop.last %}, {% endif %}
+          {% endfor %}
+        {% else %}
+          <em>None</em>
+        {% endif %}
+        </p>
+      </div>
+    {% endfor %}
+  {% elif kind == "group" %}
+    <h2>Group</h2>
+    <p><strong>ID:</strong> {{ group.id }} — <strong>Name:</strong> {{ group.name }}</p>
+    <h3>Members</h3>
+    {% if group.members_info %}
+      <ul>
+        {% for m in group.members_info %}
+          <li>{{ m.name }} (id: {{ m.id }})</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No members</p>
+    {% endif %}
+  {% elif kind == "group_list" %}
+    <h2>Groups</h2>
+    {% for g in groups %}
+      <div style="border:1px solid #ddd;padding:8px;margin:8px 0">
+        <p><strong>{{ g.name }}</strong> (id: {{ g.id }})</p>
+        <p>Members:
+          {% if g.members_info %}
+            {% for m in g.members_info %}
+              <span>{{ m.name }}</span>{% if not loop.last %}, {% endif %}
+            {% endfor %}
+          {% else %}
+            <em>None</em>
+          {% endif %}
+        </p>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>No results.</p>
+  {% endif %}
+</body>
+</html>
