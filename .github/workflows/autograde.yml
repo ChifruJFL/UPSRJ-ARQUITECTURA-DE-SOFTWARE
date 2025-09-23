@@ -20,19 +20,36 @@ jobs:
       with:
         submodules: recursive
 
-    - name: Configurar entorno virtual
+    - name: Configurar Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'
+        cache: 'pip'
 
     - name: Instalar dependencias
-      run: pip install -r requirements.txt
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then
+          pip install -r requirements.txt
+        fi
 
     - name: Clonar repositorio de evaluación
-      run: git clone https://chucholoport:${{ secrets.AUTOGRADE_PAT }}@github.com/chucholoport/autograde-core.git
-    
-    - name: Ejecutar pruebas
-      working-directory: autograde-core
       run: |
-        export PYTHONPATH=$PYTHONPATH:.. 
-        pytest ARQUITECTURA-DE-SOFTWARE/01_basic_concepts/test_app.py
+        git clone https://chucholoport:${{ secrets.AUTOGRADE_PAT }}@github.com/chucholoport/autograde-core.git
+        ls -la autograde-core/
+
+    - name: Instalar dependencias del autograde
+      run: |
+        if [ -f autograde-core/requirements.txt ]; then
+          pip install -r autograde-core/requirements.txt
+        fi
+
+    - name: Buscar archivos de test
+      run: |
+        find autograde-core -name "test_*.py" -o -name "*_test.py" | head -10
+
+    - name: Ejecutar pruebas
+      run: |
+        cd autograde-core
+        export PYTHONPATH=$PYTHONPATH:..
+        python -m pytest -v --tb=short
