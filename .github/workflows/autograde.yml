@@ -20,42 +20,19 @@ jobs:
       with:
         submodules: recursive
 
-    - name: Configurar Python
+    - name: Configurar entorno virtual
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'
 
     - name: Instalar dependencias
-      run: |
-        pip install -r requirements.txt
+      run: pip install -r requirements.txt
 
-    - name: Verificar y clonar repositorio de evaluación
-      run: |
-        # Verificar si el PAT está configurado
-        if [ -z "${{ secrets.AUTOGRADE_PAT }}" ]; then
-          echo "ERROR: AUTOGRADE_PAT no está configurado en los secrets del repositorio"
-          exit 1
-        fi
-        
-        # Intentar clonar el repositorio
-        if git clone https://chucholoport:${{ secrets.AUTOGRADE_PAT }}@github.com/chucholoport/autograde-core.git; then
-          echo "Repositorio clonado exitosamente"
-        else
-          echo "ERROR: No se pudo clonar el repositorio autograde-core"
-          echo "Posibles causas:"
-          echo "1. El repositorio no existe"
-          echo "2. El PAT no tiene permisos suficientes"
-          echo "3. El repositorio es privado y el PAT no tiene acceso"
-          exit 1
-        fi
-
-    - name: Verificar estructura del repositorio clonado
-      run: |
-        ls -la autograde-core/
-        find autograde-core -name "*.py" | head -10
-
+    - name: Clonar repositorio de evaluación
+      run: git clone https://chucholoport:${{ secrets.AUTOGRADE_PAT }}@github.com/chucholoport/autograde-core.git
+    
     - name: Ejecutar pruebas
       working-directory: autograde-core
       run: |
-        export PYTHONPATH=$PYTHONPATH:..
-        pytest ARQUITECTURA-DE-SOFTWARE/01_basic_concepts/test_app.py -v
+        export PYTHONPATH=$PYTHONPATH:.. 
+        pytest ARQUITECTURA-DE-SOFTWARE/01_basic_concepts/test_app.py
