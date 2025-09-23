@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - develop
-      - 'feature/exercise*'
+      - 'feature/exercise**'
   pull_request:
     branches:
       - develop
-      - 'feature/exercise*'
+      - 'feature/exercise**'
                 
 jobs:
   run-autograde:
