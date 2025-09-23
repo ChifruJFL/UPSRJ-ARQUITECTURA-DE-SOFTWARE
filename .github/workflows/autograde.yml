@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - develop
-      - 'feature/exercise**'
+      - 'feature/exercise*'
   pull_request:
     branches:
       - develop
-      - 'feature/exercise**'
+      - 'feature/exercise*'
                 
 jobs:
   run-autograde:
@@ -18,7 +18,7 @@ jobs:
     - name: Checkout repositorio
       uses: actions/checkout@v3
       with:
-        submodules: recursive
+        submodules: false   # Evita errores si los submódulos no están bien configurados
 
     - name: Configurar entorno virtual
       uses: actions/setup-python@v4
@@ -26,7 +26,9 @@ jobs:
         python-version: '3.11'
 
     - name: Instalar dependencias
-      run: pip install -r requirements.txt
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install -r requirements.txt
 
     - name: Clonar repositorio de evaluación
       run: git clone https://chucholoport:${{ secrets.AUTOGRADE_PAT }}@github.com/chucholoport/autograde-core.git
@@ -34,5 +36,5 @@ jobs:
     - name: Ejecutar pruebas
       working-directory: autograde-core
       run: |
-        export PYTHONPATH=$PYTHONPATH:.. 
+        export PYTHONPATH=$PYTHONPATH:..
         pytest ARQUITECTURA-DE-SOFTWARE/01_basic_concepts/test_app.py
