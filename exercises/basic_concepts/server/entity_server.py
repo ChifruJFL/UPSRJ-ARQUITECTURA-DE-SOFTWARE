@@ -6,7 +6,7 @@ class UserRepository:
         # Retorna una lista de ejemplo
         return [{"id": 1, "name": "Alice"}, {"id": 2, "name": "Bod"}]
 
-class UserService:
+class EntityService:  # <--- renombrado
     def __init__(self, repository: UserRepository):
         self.repository = repository
 
