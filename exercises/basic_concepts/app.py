@@ -17,7 +17,7 @@ class UserRepository:
         plog("Fetching users from repository", DEBUG)
         return [
             {"id": 1, "name": "Alice"},
-            {"id": 2, "name": "Bod"}
+            {"id": 2, "name": "Bob"}
         ]
 
 
