@@ -32,7 +32,7 @@ jobs:
       run: git clone https://chucholoport:${{ secrets.AUTOGRADE_PAT }}@github.com/chucholoport/autograde-core.git
     
     - name: Ejecutar pruebas
-      working-directory: autograde-core
+      working-directory: ${{ github.workspace }}
       run: |
-        export PYTHONPATH=$PYTHONPATH:.. 
+        export PYTHONPATH=$PYTHONPATH:.
         pytest ARQUITECTURA-DE-SOFTWARE/01_basic_concepts/test_app.py
