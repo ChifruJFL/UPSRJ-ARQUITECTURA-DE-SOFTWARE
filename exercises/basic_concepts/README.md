@@ -58,7 +58,7 @@ pip install flask
 python app.py
 ```
 
-> 💡 **Note:** This step is fulfilled when running `01_basic_concepts.ps1` on root directory
+> 💡 **Note:** This step is fulfilled when running `basic_concepts.ps1` on root directory
 
 3. **Access the endpoint**
 - Open your browser and go to: `http://localhost:5000/users`

@@ -1,4 +1,8 @@
+#!/bin/bash
+
 # ┌────────────────────────────────────────┐
-# │ Script PowerShell para ejercicio       │
+# │ Script Bash para ejercicio             │
 # └────────────────────────────────────────┘
-py -m exercises.basic_concepts.app
+
+# Ejecutar el módulo de Python
+python3 -m exercises.basic_concepts.app

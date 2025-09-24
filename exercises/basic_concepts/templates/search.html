@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Búsqueda de Usuarios</title>
+    <script>
+        // Cambia el placeholder y el name del input dependiendo del tipo de búsqueda seleccionado
+        function change_search_mode() {
+            const tipoBusqueda = document.getElementById("search_mode").value;
+            const input = document.getElementById("input_search");
+
+            if (tipoBusqueda === "id") {
+                input.placeholder = "Ingrese ID de usuario";
+                input.name = "id";
+            } else {
+                input.placeholder = "Ingrese nombre o email";
+                input.name = "keyword";
+            }
+        }
+
+        // Asegura que el campo input tenga el name correcto al cargar la página
+        window.onload = function () {
+            change_search_mode();
+        };
+    </script>
+</head>
+<body>
+    <h1>Buscar Usuario</h1>
+
+    <form method="POST" action="/search">
+        <label for="search_mode">Modo de búsqueda:</label>
+        <select id="search_mode" onchange="change_search_mode()">
+            <option value="keyword" selected>Por nombre</option>
+            <option value="id">Por ID</option>
+        </select>
+
+        <br><br>
+
+        <input type="text" id="input_search" name="keyword" placeholder="Ingrese nombre" required>
+        <button type="submit">Buscar</button>
+    </form>
+</body>
+</html>

@@ -1,5 +1,0 @@
-[
-  {"id": 1, "name": "Admins", "members": [1,2]},
-  {"id": 2, "name": "Developers", "members": [2,3]},
-  {"id": 3, "name": "Design", "members": [4]}
-]
